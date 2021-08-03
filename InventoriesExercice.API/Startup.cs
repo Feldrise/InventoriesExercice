@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,7 +31,21 @@ namespace InventoriesExercice.API
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "InventoriesExercice.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "InventoriesExercice.API",
+                    Description = "An API to manage stocks, used as an exercice correction",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Victor (Feldrise) DENIS",
+                        Email = "contact@feldrise.com",
+                        Url = new Uri("https://feldrise.com")
+                    }
+                });
+
+                var filepath = Path.Combine(System.AppContext.BaseDirectory, "InventoriesExercice.API.xml");
+                c.IncludeXmlComments(filepath);
             });
         }
 
@@ -41,7 +56,10 @@ namespace InventoriesExercice.API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "InventoriesExercice.API v1"));
+                app.UseSwaggerUI(c => {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "InventoriesExercice.API v1");
+                    c.RoutePrefix = "documentation";
+                });
             }
 
             app.UseHttpsRedirection();
