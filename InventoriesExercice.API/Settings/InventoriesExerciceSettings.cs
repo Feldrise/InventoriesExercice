@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace InventoriesExercice.API.Settings
 {
-    public class MongoSettings : IMongoSettings
+    public class InventoriesExerciceSettings : IInventoriesExerciceSettings
     {
-        public string UsersCollectionName { get; set; }
-
-        public string ConnectionString { get; set; }
-        public string DatabaseName { get; set; }
+        public string ApiSecret { get; set; }
     }
 }
