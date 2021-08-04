@@ -42,8 +42,8 @@ namespace InventoriesExercise.API
             services.AddSingleton<IInventoriesExerciseSettings>(Span => Span.GetRequiredService<IOptions<InventoriesExerciseSettings>>().Value);
 
             // JWT Authentication
-            var InventoriesExerciseSettings = Configuration.GetSection(nameof(InventoriesExerciseSettings)).Get<InventoriesExerciseSettings>();
-            var key = Encoding.ASCII.GetBytes(InventoriesExerciseSettings.ApiSecret);
+            var inventoriesExerciseSettings = Configuration.GetSection(nameof(InventoriesExerciseSettings)).Get<InventoriesExerciseSettings>();
+            var key = Encoding.ASCII.GetBytes(inventoriesExerciseSettings.ApiSecret);
 
             services.AddAuthentication(x =>
             {
