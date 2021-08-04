@@ -1,0 +1,250 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>InventoriesExercise.API</name>
+    </assembly>
+    <members>
+        <member name="M:InventoriesExercise.API.Controllers.AuthenticationController.Login(InventoriesExercise.API.Models.Users.LoginModel)">
+            <summary>
+            Login a user to the API
+            </summary>
+            <response code="200">Return the logged user with valid token</response>
+            <response code="400">The user doesn't exist or the password doesn't match</response>
+            <returns></returns>
+        </member>
+        <member name="M:InventoriesExercise.API.Controllers.AuthenticationController.Register(InventoriesExercise.API.Models.Users.RegisterModel)">
+            <summary>
+            Register a new user to the database
+            </summary>
+            <response code="200">Return the newly registrated user's id</response>
+            <response code="400">There was one or more errors during registration validation</response>
+            <returns></returns>
+        </member>
+        <member name="M:InventoriesExercise.API.Controllers.InventoriesController.GetAllInventories">
+            <summary>
+            Get all inventories of a user
+            </summary>
+            <response code="200">Return the list of the user's inventories</response>
+            <response code="401">You must be logged in</response>
+            <returns></returns>
+        </member>
+        <member name="M:InventoriesExercise.API.Controllers.InventoriesController.GetInventory(System.String)">
+            <summary>
+            Get specific inventory
+            </summary>
+            <response code="200">Return the inventory</response>
+            <response code="401">You must be logged in</response>
+            <response code="403">You don't have the right to get this inventory</response>
+            <returns></returns>
+        </member>
+        <member name="M:InventoriesExercise.API.Controllers.InventoriesController.GetAllItems(System.String)">
+            <summary>
+            Get all items of an inventory
+            </summary>
+            <response code="200">Return the list of the user's items in an inventory</response>
+            <response code="401">You must be logged in</response>
+            <response code="403">You don't have the right to get this inventory's items</response>
+            <returns></returns>
+        </member>
+        <member name="M:InventoriesExercise.API.Controllers.InventoriesController.CreateInventory(InventoriesExercise.API.Models.InventoryModel)">
+            <summary>
+            Create an inventory
+            </summary>
+            <response code="200">Return the newly created inventory's id</response>
+            <response code="401">You must be logged in</response>
+            <returns></returns>
+        </member>
+        <member name="M:InventoriesExercise.API.Controllers.InventoriesController.UpdateInventory(System.String,InventoriesExercise.API.Models.InventoryModel)">
+            <summary>
+            Update an inventory
+            </summary>
+            <response code="200">The inventory has successfuly been updated</response>
+            <response code="401">You must be logged in</response>
+            <response code="403">You don't have the right to update this inventory</response>
+            <returns></returns>
+        </member>
+        <member name="M:InventoriesExercise.API.Controllers.InventoriesController.DeleteInventory(System.String)">
+            <summary>
+            Delete an inventory
+            </summary>
+            <response code="200">The inventory has successfuly been deleted</response>
+            <response code="401">You must be logged in</response>
+            <response code="403">You don't have the right to delete this inventory</response>
+            <returns></returns>
+        </member>
+        <member name="M:InventoriesExercise.API.Controllers.ItemsController.GetItem(System.String)">
+            <summary>
+            Get specific item
+            </summary>
+            <response code="200">Return the item</response>
+            <response code="401">You must be logged in</response>
+            <response code="403">You don't have the right to get this item</response>
+            <returns></returns>
+        </member>
+        <member name="M:InventoriesExercise.API.Controllers.ItemsController.CreateItem(InventoriesExercise.API.Models.ItemModel)">
+            <summary>
+            Create an item
+            </summary>
+            <response code="200">Return the newly created item's id</response>
+            <response code="400">You cant create this item, most probably beceause the inventory doesn't exist</response>
+            <response code="401">You must be logged in</response>
+            <response code="403">You don't have the rights to create this item</response>
+            <returns></returns>
+        </member>
+        <member name="M:InventoriesExercise.API.Controllers.ItemsController.UpdateItem(System.String,InventoriesExercise.API.Models.ItemModel)">
+            <summary>
+            Update an item
+            </summary>
+            <response code="200">The item has successfuly been updated</response>
+            <response code="401">You must be logged in</response>
+            <response code="403">You don't have the right to update this item</response>
+            <returns></returns>
+        </member>
+        <member name="M:InventoriesExercise.API.Controllers.ItemsController.DeleteInventory(System.String)">
+            <summary>
+            Delete an item
+            </summary>
+            <response code="200">The item has successfuly been deleted</response>
+            <response code="401">You must be logged in</response>
+            <response code="403">You don't have the right to delete this item</response>
+            <returns></returns>
+        </member>
+        <member name="P:InventoriesExercise.API.Entities.Inventory.OwnerId">
+            <summary>
+            The id of the user who created the inventory
+            </summary>
+            <example>61099647773fb8bad8df5a8b</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Entities.Inventory.Name">
+            <summary>
+            The inventory name
+            </summary>
+            <example>Cuddly Toys</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Entities.Inventory.Description">
+            <summary>
+            The inventory description 
+            </summary>
+            <example>A stock of nice cuddly toys</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Entities.Item.InventoryId">
+            <summary>
+            The id of the inventory the item is in
+            </summary>
+            <example>61099647773fb8bad8df5a8b</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Entities.Item.Name">
+            <summary>
+            The item name
+            </summary>
+            <example>Teddy Bear</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Entities.Item.Description">
+            <summary>
+            The item description 
+            </summary>
+            <example>Simple teddy bear, fluffy and lovely for all children</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Entities.Item.Quantity">
+            <summary>
+            The number of items in stock
+            </summary>
+            <example>3</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Entities.User.FirstName">
+            <summary>
+            The user's first name
+            </summary>
+            <example>Victor</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Entities.User.LastName">
+            <summary>
+            The user's last name
+            </summary>
+            <example>DENIS</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Entities.User.Email">
+            <summary>
+            The user's email
+            </summary>
+            <example>admin@feldrise.com</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Entities.User.Token">
+            <summary>
+            The user's connection token
+            </summary>
+        </member>
+        <member name="P:InventoriesExercise.API.Models.InventoryModel.Name">
+            <summary>
+            The inventory name
+            </summary>
+            <example>Cuddly Toys</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Models.InventoryModel.Description">
+            <summary>
+            The inventory description 
+            </summary>
+            <example>A stock of nice cuddly toys</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Models.ItemModel.InventoryId">
+            <summary>
+            The id of the inventory the item is in
+            </summary>
+            <example>61099647773fb8bad8df5a8b</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Models.ItemModel.Name">
+            <summary>
+            The item name
+            </summary>
+            <example>Teddy Bear</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Models.ItemModel.Description">
+            <summary>
+            The item description 
+            </summary>
+            <example>Simple teddy bear, fluffy and lovely for all children</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Models.ItemModel.Quantity">
+            <summary>
+            The number of items in stock
+            </summary>
+            <example>3</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Models.Users.LoginModel.Email">
+            <summary>
+            The user's email
+            </summary>
+            <example>admin@feldrise.com</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Models.Users.LoginModel.Password">
+            <summary>
+            The user's password
+            </summary>
+            <example>MySyperSecurePassword</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Models.Users.RegisterModel.FirstName">
+            <summary>
+            The user's first name
+            </summary>
+            <example>Victor</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Models.Users.RegisterModel.LastName">
+            <summary>
+            The user's last name
+            </summary>
+            <example>DENIS</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Models.Users.RegisterModel.Email">
+            <summary>
+            The user's email
+            </summary>
+            <example>admin@feldrise.com</example>
+        </member>
+        <member name="P:InventoriesExercise.API.Models.Users.RegisterModel.Password">
+            <summary>
+            The user's password
+            </summary>
+            <example>MySuperSecurePassword</example>
+        </member>
+    </members>
+</doc>
