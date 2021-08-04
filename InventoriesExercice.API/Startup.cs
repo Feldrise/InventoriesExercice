@@ -64,6 +64,19 @@ namespace InventoriesExercice.API
             });
 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IInventoriesService, InventoriesService>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("developerPolicy", builder =>
+                {
+                    builder
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .SetIsOriginAllowed((host) => true)
+                        .AllowCredentials();
+                });
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -92,17 +105,20 @@ namespace InventoriesExercice.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "InventoriesExercice.API v1");
-                    c.RoutePrefix = "documentation";
-                });
             }
+
+            app.UseCors("developerPolicy");
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "InventoriesExercice.API v1");
+                c.RoutePrefix = "documentation";
+            });
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
