@@ -24,9 +24,8 @@ namespace InventoriesExercice.API.Controllers
         /// <summary>
         /// Login a user to the API
         /// </summary>
-        /// <param name="loginModel"></param>
-        /// <response code="400">The user doesn't exist or the password doesn't match</response>
         /// <response code="200">Return the logged user with valid token</response>
+        /// <response code="400">The user doesn't exist or the password doesn't match</response>
         /// <returns></returns>
         [HttpPost("login")]
         public async Task<ActionResult<User>> Login([FromBody] LoginModel loginModel)
@@ -44,9 +43,8 @@ namespace InventoriesExercice.API.Controllers
         /// <summary>
         /// Register a new user to the database
         /// </summary>
-        /// <param name="registerModel"></param>
-        /// <response code="400">There was one or more errors during registration validation</response>
         /// <response code="200">Return the newly registrated user's id</response>
+        /// <response code="400">There was one or more errors during registration validation</response>
         /// <returns></returns>
         [HttpPost("register")]
         public async Task<ActionResult<string>> Register([FromBody] RegisterModel registerModel)
