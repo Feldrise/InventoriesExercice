@@ -17,10 +17,12 @@ namespace InventoriesExercice.API.Controllers
     public class InventoriesController : ControllerBase
     {
         private readonly IInventoriesService _inventoriesService;
+        private readonly IItemsService _itemsService;
 
-        public InventoriesController(IInventoriesService inventoriesService)
+        public InventoriesController(IInventoriesService inventoriesService, IItemsService itemsService)
         {
             _inventoriesService = inventoriesService;
+            _itemsService = itemsService;
         }
 
         /// <summary>
@@ -60,6 +62,30 @@ namespace InventoriesExercice.API.Controllers
                 }
 
                 return Ok(inventory);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+        }
+
+        /// <summary>
+        /// Get all items of an inventory
+        /// </summary>
+        /// <response code="200">Return the list of the user's items in an inventory</response>
+        /// <response code="401">You must be logged in</response>
+        /// <response code="403">You don't have the right to get this inventory's items</response>
+        /// <returns></returns>
+        [HttpGet("{id:length(24)}/items")]
+        public async Task<ActionResult<List<Item>>> GetAllItems(string id)
+        {
+            var currentUserId = User.Identity.Name;
+
+            try
+            {
+                var items = await _itemsService.GetAllAsync(currentUserId, id);
+
+                return Ok(items);
             }
             catch (UnauthorizedAccessException)
             {

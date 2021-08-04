@@ -65,6 +65,7 @@ namespace InventoriesExercice.API
 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IInventoriesService, InventoriesService>();
+            services.AddScoped<IItemsService, ItemsService>();
 
             services.AddCors(options =>
             {

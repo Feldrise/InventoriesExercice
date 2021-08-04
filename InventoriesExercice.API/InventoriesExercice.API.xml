@@ -37,6 +37,15 @@
             <response code="403">You don't have the right to get this inventory</response>
             <returns></returns>
         </member>
+        <member name="M:InventoriesExercice.API.Controllers.InventoriesController.GetAllItems(System.String)">
+            <summary>
+            Get all items of an inventory
+            </summary>
+            <response code="200">Return the list of the user's items in an inventory</response>
+            <response code="401">You must be logged in</response>
+            <response code="403">You don't have the right to get this inventory's items</response>
+            <returns></returns>
+        </member>
         <member name="M:InventoriesExercice.API.Controllers.InventoriesController.CreateInventory(InventoriesExercice.API.Models.InventoryModel)">
             <summary>
             Create an inventory
@@ -63,6 +72,43 @@
             <response code="403">You don't have the right to delete this inventory</response>
             <returns></returns>
         </member>
+        <member name="M:InventoriesExercice.API.Controllers.ItemsController.GetItem(System.String)">
+            <summary>
+            Get specific item
+            </summary>
+            <response code="200">Return the item</response>
+            <response code="401">You must be logged in</response>
+            <response code="403">You don't have the right to get this item</response>
+            <returns></returns>
+        </member>
+        <member name="M:InventoriesExercice.API.Controllers.ItemsController.CreateItem(InventoriesExercice.API.Models.ItemModel)">
+            <summary>
+            Create an item
+            </summary>
+            <response code="200">Return the newly created item's id</response>
+            <response code="400">You cant create this item, most probably beceause the inventory doesn't exist</response>
+            <response code="401">You must be logged in</response>
+            <response code="403">You don't have the rights to create this item</response>
+            <returns></returns>
+        </member>
+        <member name="M:InventoriesExercice.API.Controllers.ItemsController.UpdateItem(System.String,InventoriesExercice.API.Models.ItemModel)">
+            <summary>
+            Update an item
+            </summary>
+            <response code="200">The item has successfuly been updated</response>
+            <response code="401">You must be logged in</response>
+            <response code="403">You don't have the right to update this item</response>
+            <returns></returns>
+        </member>
+        <member name="M:InventoriesExercice.API.Controllers.ItemsController.DeleteInventory(System.String)">
+            <summary>
+            Delete an item
+            </summary>
+            <response code="200">The item has successfuly been deleted</response>
+            <response code="401">You must be logged in</response>
+            <response code="403">You don't have the right to delete this item</response>
+            <returns></returns>
+        </member>
         <member name="P:InventoriesExercice.API.Entities.Inventory.OwnerId">
             <summary>
             The id of the user who created the inventory
@@ -80,6 +126,30 @@
             The inventory description 
             </summary>
             <example>A stock of nice cuddly toys</example>
+        </member>
+        <member name="P:InventoriesExercice.API.Entities.Item.InventoryId">
+            <summary>
+            The id of the inventory the item is in
+            </summary>
+            <example>61099647773fb8bad8df5a8b</example>
+        </member>
+        <member name="P:InventoriesExercice.API.Entities.Item.Name">
+            <summary>
+            The item name
+            </summary>
+            <example>Teddy Bear</example>
+        </member>
+        <member name="P:InventoriesExercice.API.Entities.Item.Description">
+            <summary>
+            The item description 
+            </summary>
+            <example>Simple teddy bear, fluffy and lovely for all children</example>
+        </member>
+        <member name="P:InventoriesExercice.API.Entities.Item.Quantity">
+            <summary>
+            The number of items in stock
+            </summary>
+            <example>3</example>
         </member>
         <member name="P:InventoriesExercice.API.Entities.User.FirstName">
             <summary>
@@ -115,6 +185,30 @@
             The inventory description 
             </summary>
             <example>A stock of nice cuddly toys</example>
+        </member>
+        <member name="P:InventoriesExercice.API.Models.ItemModel.InventoryId">
+            <summary>
+            The id of the inventory the item is in
+            </summary>
+            <example>61099647773fb8bad8df5a8b</example>
+        </member>
+        <member name="P:InventoriesExercice.API.Models.ItemModel.Name">
+            <summary>
+            The item name
+            </summary>
+            <example>Teddy Bear</example>
+        </member>
+        <member name="P:InventoriesExercice.API.Models.ItemModel.Description">
+            <summary>
+            The item description 
+            </summary>
+            <example>Simple teddy bear, fluffy and lovely for all children</example>
+        </member>
+        <member name="P:InventoriesExercice.API.Models.ItemModel.Quantity">
+            <summary>
+            The number of items in stock
+            </summary>
+            <example>3</example>
         </member>
         <member name="P:InventoriesExercice.API.Models.Users.LoginModel.Email">
             <summary>
