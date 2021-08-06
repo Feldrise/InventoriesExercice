@@ -47,14 +47,14 @@ namespace InventoriesExercise.API.Controllers
         /// <response code="401">You must be logged in</response>
         /// <response code="403">You don't have the right to get this inventory</response>
         /// <returns></returns>
-        [HttpGet("{id:length(24)}")]
-        public async Task<ActionResult<Inventory>> GetInventory(string id)
+        [HttpGet("{slug}")]
+        public async Task<ActionResult<Inventory>> GetInventory(string slug)
         {
             var currentUserId = User.Identity.Name;
 
             try
             {
-                var inventory = await _inventoriesService.GetAsync(currentUserId, id);
+                var inventory = await _inventoriesService.GetAsync(currentUserId, slug);
 
                 if (inventory == null)
                 {
@@ -104,9 +104,16 @@ namespace InventoriesExercise.API.Controllers
         {
             var currentUserId = User.Identity.Name;
 
-            string inventoryId = await _inventoriesService.CreateAsync(currentUserId, inventoryModel);
+            try
+            {
+                string inventoryId = await _inventoriesService.CreateAsync(currentUserId, inventoryModel);
 
-            return Ok(inventoryId);
+                return Ok(inventoryId);
+            }
+            catch (Exception e)
+            {
+                return BadRequest($"Cant create the inventory: ${e.Message}");
+            }
         }
 
         /// <summary>
@@ -130,6 +137,10 @@ namespace InventoriesExercise.API.Controllers
             catch (UnauthorizedAccessException)
             {
                 return Forbid();
+            }
+            catch (Exception e)
+            {
+                return BadRequest($"Cant update the inventory: {e.Message}");
             }
         }
 

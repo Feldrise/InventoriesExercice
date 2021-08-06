@@ -115,6 +115,12 @@
             </summary>
             <example>61099647773fb8bad8df5a8b</example>
         </member>
+        <member name="P:InventoriesExercise.API.Entities.Inventory.Slug">
+            <summary>
+            The inventory slug, must be unique
+            </summary>
+            <example>cuddly_toys</example>
+        </member>
         <member name="P:InventoriesExercise.API.Entities.Inventory.Name">
             <summary>
             The inventory name
@@ -245,6 +251,9 @@
             The user's password
             </summary>
             <example>MySuperSecurePassword</example>
+        </member>
+        <member name="M:InventoriesExercise.API.Services.InventoriesService.RemoveDiacritics(System.String)">
+            See: http://www.siao2.com/2007/05/14/2629747.aspx
         </member>
     </members>
 </doc>

@@ -21,6 +21,12 @@ namespace InventoriesExercise.API.Entities
         public string OwnerId { get; set; }
 
         /// <summary>
+        /// The inventory slug, must be unique
+        /// </summary>
+        /// <example>cuddly_toys</example>
+        public string Slug { get; set; }
+
+        /// <summary>
         /// The inventory name
         /// </summary>
         /// <example>Cuddly Toys</example>

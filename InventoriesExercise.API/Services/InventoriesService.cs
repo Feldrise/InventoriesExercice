@@ -5,7 +5,10 @@ using InventoriesExercise.API.Settings.Interfaces;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace InventoriesExercise.API.Services
@@ -31,9 +34,9 @@ namespace InventoriesExercise.API.Services
             return await dbInventories.ToListAsync();
         }
 
-        public async Task<Inventory> GetAsync(string userId, string id)
+        public async Task<Inventory> GetAsync(string userId, string slug)
         {
-            Inventory inventory = await GetFromIdAsync(id);
+            Inventory inventory = await GetFromSlugAsync(slug);
 
             if (inventory == null)
             {
@@ -50,9 +53,17 @@ namespace InventoriesExercise.API.Services
 
         public async Task<string> CreateAsync(string userId, InventoryModel inventoryModel)
         {
+            string slug = GenerateSlug(inventoryModel.Name);
+
+            if (await DoesSlugExist(slug))
+            {
+                throw new Exception("The slug already exist. You should change the inventory name");
+            }
+
             Inventory inventory = new()
             {
                 OwnerId = userId,
+                Slug = slug,
                 Name = inventoryModel.Name,
                 Description = inventoryModel.Description
             };
@@ -73,8 +84,16 @@ namespace InventoriesExercise.API.Services
                 throw new UnauthorizedAccessException("You don't have the rights to update this inventory");
             }
 
+            string slug = GenerateSlug(inventoryModel.Name);
+
+            if (await DoesSlugExist(slug, id))
+            {
+                throw new Exception("The slug already exist. You should change the inventory name");
+            }
+
             // Then we can update
             var update = Builders<Inventory>.Update
+                .Set(dbInventory => dbInventory.Slug, slug)
                 .Set(dbInventory => dbInventory.Name, inventoryModel.Name)
                 .Set(dbInventory => dbInventory.Description, inventoryModel.Description);
 
@@ -110,11 +129,64 @@ namespace InventoriesExercise.API.Services
             return await dbInventory.FirstOrDefaultAsync();
         }
 
+        private async Task<Inventory> GetFromSlugAsync(string slug)
+        {
+            var dbInventory = await _inventories.FindAsync(
+                dbInventory => dbInventory.Slug == slug
+            );
+
+            return await dbInventory.FirstOrDefaultAsync();
+        }
+
         private async Task<bool> CanEditAsync(string userId, string id)
         {
             Inventory inventory = await GetFromIdAsync(id);
 
             return inventory != null && inventory.OwnerId == userId;
+        }
+
+        private async Task<bool> DoesSlugExist(string slug, string currentInventoyId = null)
+        {
+            var dbInventory = await _inventories.FindAsync(
+                dbInventory => dbInventory.Slug == slug
+            );
+
+            Inventory inventory = await dbInventory.FirstOrDefaultAsync();
+
+            return inventory != null &&
+                   inventory.Id != currentInventoyId;
+        }
+
+        /// See: http://www.siao2.com/2007/05/14/2629747.aspx
+        private static string RemoveDiacritics(string stIn)
+        {
+            string stFormD = stIn.Normalize(NormalizationForm.FormD);
+            StringBuilder sb = new StringBuilder();
+
+            for (int ich = 0; ich < stFormD.Length; ich++)
+            {
+                UnicodeCategory uc = CharUnicodeInfo.GetUnicodeCategory(stFormD[ich]);
+                if (uc != UnicodeCategory.NonSpacingMark)
+                {
+                    sb.Append(stFormD[ich]);
+                }
+            }
+
+            return (sb.ToString().Normalize(NormalizationForm.FormC));
+        }
+
+        private static string GenerateSlug(string phrase)
+        {
+            string str = RemoveDiacritics(phrase).ToLower();
+
+            // invalid chars           
+            str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
+            // convert multiple spaces into one space   
+            str = Regex.Replace(str, @"\s+", " ").Trim();
+            // cut and trim 
+            str = str.Substring(0, str.Length <= 45 ? str.Length : 45).Trim();
+            str = Regex.Replace(str, @"\s", "-"); // hyphens   
+            return str;
         }
     }
 }

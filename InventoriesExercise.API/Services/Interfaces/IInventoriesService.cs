@@ -10,7 +10,7 @@ namespace InventoriesExercise.API.Services.Interfaces
     public interface IInventoriesService
     {
         Task<List<Inventory>> GetAllAsync(string userId);
-        Task<Inventory> GetAsync(string userId, string id);
+        Task<Inventory> GetAsync(string userId, string slug);
 
         Task<string> CreateAsync(string userId, InventoryModel inventoryModel);
         Task UpdateAsync(string userId, string id, InventoryModel inventoryModel);
